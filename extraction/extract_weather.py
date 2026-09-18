@@ -12,7 +12,7 @@ cities_csv = Path(__file__).resolve().parent / "ma.csv"
 bronze_dir = base / "data" / "bronze"
 
 meteo_url = "https://api.open-meteo.com/v1/forecast"
-forcast_days = 7
+forecast_days = 7
 time_out = 10
 
 max_retries = 3
@@ -26,16 +26,20 @@ def call_api(params: dict):
         try:
             response = requests.get(meteo_url, params=params, timeout=time_out)
             response.raise_for_status()
+            print(f"Response:{response}")
             return response.json()
 
         except (requests.Timeout, requests.ConnectionError) as e:
             last_exception = e
             if attempt < max_retries:
                 wait = retry_backoff[attempt - 1]
-                print(f"[BRONZE] Attempt {attempt} failed ({type(e).__name__}). Retrying in {wait}s...")
+                print(
+                    f"[BRONZE] Attempt {attempt} failed ({type(e).__name__}). Retrying in {wait}s..."
+                )
                 time.sleep(wait)
 
     raise last_exception
+
 
 def fetch_city_forecast(city_row: pd.Series):
     city_name = city_row["city"]
@@ -46,17 +50,19 @@ def fetch_city_forecast(city_row: pd.Series):
     params = {
         "latitude": lat,
         "longitude": lng,
-        "daily": ",".join([
-                    "temperature_2m_max",
-                    "temperature_2m_min",
-                    "precipitation_sum",
-                    "precipitation_probability_max",
-                    "wind_speed_10m_max",
-                    "wind_gusts_10m_max",
-                    "weather_code",
-                    ]),
+        "daily": ",".join(
+            [
+                "temperature_2m_max",
+                "temperature_2m_min",
+                "precipitation_sum",
+                "precipitation_probability_max",
+                "wind_speed_10m_max",
+                "wind_gusts_10m_max",
+                "weather_code",
+            ]
+        ),
         "timezone": "Africa/Casablanca",
-        "forcast_days": forcast_days,
+        "forecast_days": forecast_days,
     }
 
     record = {
@@ -85,7 +91,7 @@ def fetch_city_forecast(city_row: pd.Series):
         record["error"] = f"CONNECTION_ERROR: {e}"
     except Exception as e:
         record["error"] = f"UNEXPECTED_ERROR: {type(e).__name__}: {e}"
-    
+
     return record
 
 
@@ -100,6 +106,7 @@ def load_cities(csv_path):
     if df.empty:
         raise ValueError("ma.csv has no rows — nothing to extract.")
 
+    print(f"1.Loadingg the csv cities:{df}")
     return df
 
 
@@ -107,14 +114,13 @@ def run_extraction():
 
     cities_df = load_cities(cities_csv)
 
-    run_date = datetime.now(timezone.utc).strftime("%Y-%m-%d")
-    out_path = bronze_dir / f"weather_{run_date}.json"
+    # run_date = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    bronze_dir.mkdir(parents=True, exist_ok=True)
+    out_path = bronze_dir / f"weather_raw.json"
 
-    if out_path.exists():
-        print(
-            f"file for {run_date} already exists at {out_path}. "
-        )
-        return out_path
+    # if out_path.exists():
+    #     print(f"file for {run_date} already exists at {out_path}. ")
+    #     return out_path
 
     results = []
     total = len(cities_df)
@@ -123,7 +129,7 @@ def run_extraction():
 
     for idx, row in cities_df.iterrows():
         city_name = row["city"]
-        print(f"({idx + 1}/{total}) fetching: {city_name}")
+        # print(f"({idx + 1}/{total}) fetching: {city_name}")
 
         record = fetch_city_forecast(row)
 
@@ -135,7 +141,7 @@ def run_extraction():
             success_count += 1
 
         results.append(record)
-        
+
         time.sleep(0.3)
 
     with open(out_path, "w", encoding="utf-8") as f:
@@ -147,7 +153,6 @@ def run_extraction():
     )
 
     return out_path
-
 
 
 if __name__ == "__main__":
