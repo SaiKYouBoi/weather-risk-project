@@ -114,13 +114,8 @@ def run_extraction():
 
     cities_df = load_cities(cities_csv)
 
-    # run_date = datetime.now(timezone.utc).strftime("%Y-%m-%d")
     bronze_dir.mkdir(parents=True, exist_ok=True)
     out_path = bronze_dir / f"weather_raw.json"
-
-    # if out_path.exists():
-    #     print(f"file for {run_date} already exists at {out_path}. ")
-    #     return out_path
 
     results = []
     total = len(cities_df)
