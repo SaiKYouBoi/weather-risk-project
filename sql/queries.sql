@@ -19,7 +19,7 @@ JOIN cities c ON c.city_id = w.city_id
 GROUP BY c.city
 ORDER BY peak_gusts_kmh DESC;
 
--- Q3. Which cities have the highest average risk?
+-- Which cities have the highest average risk?
 
 SELECT
     c.city,
@@ -29,7 +29,7 @@ JOIN cities c ON c.city_id = w.city_id
 GROUP BY c.city
 ORDER BY avg_risk_score DESC;
 
--- Q4. Which periods present the greatest risk?
+-- Which periods present the greatest risk?
 
 SELECT
     w.forecast_date,
@@ -38,7 +38,7 @@ FROM weather_daily w
 GROUP BY w.forecast_date
 ORDER BY avg_risk_score DESC;
 
--- Q5. For each city, which period presents the highest risk?
+-- For each city, which period presents the highest risk?
 
 SELECT DISTINCT ON (c.city)
     c.city,
