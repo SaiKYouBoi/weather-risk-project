@@ -4,6 +4,7 @@ from pathlib import Path
 from config import DB_URL
 
 def add_temp_category(df):
+
     df["temp_category"] = pd.cut(
         df["temp_max"],
         bins=[-float("inf"), 25, 35, 42, float("inf")],
