@@ -1,0 +1,7 @@
+pandas>=3.0
+pyarrow
+python-dotenv
+requests
+SQLAlchemy
+psycopg2-binary
+streamlit
