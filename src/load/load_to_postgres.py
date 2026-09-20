@@ -1,7 +1,7 @@
 import pandas as pd
-from sqlalchemy import create_engine, text
+from sqlalchemy import text
 from pathlib import Path
-from config import DB_URL
+from src.db.connection import engine
 
 def add_temp_category(df):
 
@@ -55,9 +55,6 @@ def compute_risk_score(df):
     ).astype(str)
 
     return df
-
-def get_engine():
-    return create_engine(DB_URL)
 
 
 def upsert_cities(df, engine):
@@ -141,7 +138,6 @@ def run_gold(silver_path: Path):
     df = compute_risk_score(df)
 
    
-    engine = get_engine()
     upsert_cities(df, engine)
     upsert_forecasts(df, engine)
 
