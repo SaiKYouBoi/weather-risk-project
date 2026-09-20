@@ -1,4 +1,4 @@
--- Q1. Which cities will experience the highest temperatures?
+-- Which cities will experience the highest temperatures?
 
 SELECT
     c.city,
