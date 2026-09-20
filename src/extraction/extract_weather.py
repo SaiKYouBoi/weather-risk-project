@@ -147,7 +147,7 @@ def run_extraction():
         f"Saved to: {out_path}"
     )
 
-    return out_path
+    return str(out_path)
 
 
 if __name__ == "__main__":

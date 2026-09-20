@@ -3,6 +3,7 @@ from sqlalchemy import text
 from pathlib import Path
 from src.db.connection import engine
 
+
 def add_temp_category(df):
 
     df["temp_category"] = pd.cut(
@@ -69,7 +70,6 @@ def upsert_cities(df, engine):
             """),
                 row.to_dict(),
             )
-        conn.commit()
 
 
 def upsert_forecasts(df, engine):
@@ -123,21 +123,17 @@ def upsert_forecasts(df, engine):
             """),
                 row.to_dict(),
             )
-        conn.commit()
 
 
 def run_gold(silver_path: Path):
     df = pd.read_parquet(silver_path)
 
-    
     df = add_temp_category(df)
     df = add_precip_category(df)
     df = add_wind_category(df)
 
-
     df = compute_risk_score(df)
 
-   
     upsert_cities(df, engine)
     upsert_forecasts(df, engine)
 

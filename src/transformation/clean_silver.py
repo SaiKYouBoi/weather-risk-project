@@ -91,7 +91,7 @@ def run_silver(bronze_path: Path, silver_dir: Path):
     out_path = silver_dir / f"weather_clean.parquet"
     df.to_parquet(out_path, index=False)
     print(f"{len(df)} rows written to {out_path}")
-    return out_path
+    return str(out_path)
 
 
 if __name__ == "__main__":
