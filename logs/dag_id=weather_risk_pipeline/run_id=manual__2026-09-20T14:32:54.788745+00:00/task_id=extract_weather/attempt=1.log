@@ -1,0 +1,70 @@
+[2026-09-20T14:33:11.584+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2026-09-20T14:33:11.675+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: weather_risk_pipeline.extract_weather manual__2026-09-20T14:32:54.788745+00:00 [queued]>
+[2026-09-20T14:33:11.697+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: weather_risk_pipeline.extract_weather manual__2026-09-20T14:32:54.788745+00:00 [queued]>
+[2026-09-20T14:33:11.698+0000] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2026-09-20T14:33:11.727+0000] {taskinstance.py:2330} INFO - Executing <Task(PythonOperator): extract_weather> on 2026-09-20 14:32:54.788745+00:00
+[2026-09-20T14:33:11.744+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'weather_risk_pipeline', 'extract_weather', 'manual__2026-09-20T14:32:54.788745+00:00', '--job-id', '4', '--raw', '--subdir', 'DAGS_FOLDER/weather_risk_dag.py', '--cfg-path', '/tmp/tmpi8kqjzef']
+[2026-09-20T14:33:11.749+0000] {standard_task_runner.py:91} INFO - Job 4: Subtask extract_weather
+[2026-09-20T14:33:11.753+0000] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:62 DeprecationWarning: This process (pid=164) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2026-09-20T14:33:11.755+0000] {standard_task_runner.py:64} INFO - Started process 173 to run task
+[2026-09-20T14:33:11.866+0000] {task_command.py:426} INFO - Running <TaskInstance: weather_risk_pipeline.extract_weather manual__2026-09-20T14:32:54.788745+00:00 [running]> on host 92f0cabb9fce
+[2026-09-20T14:33:12.082+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='weather_risk_pipeline' AIRFLOW_CTX_TASK_ID='extract_weather' AIRFLOW_CTX_EXECUTION_DATE='2026-09-20T14:32:54.788745+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-09-20T14:32:54.788745+00:00'
+[2026-09-20T14:33:12.083+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2026-09-20T14:33:12.140+0000] {logging_mixin.py:188} INFO - 1.Loadingg the csv cities:           city      lat      lng  population                     region
+0    Casablanca  33.5992  -7.6200     3752000    Grand Casablanca-Settat
+1         Rabat  34.0209  -6.8416      577827         Rabat-Salé-Kénitra
+2     Marrakech  31.6295  -7.9811      928850             Marrakech-Safi
+3           Fes  34.0333  -5.0000     1112072                 Fès-Meknès
+4       Tangier  35.7595  -5.8340      947952  Tanger-Tétouan-Al Hoceïma
+5        Agadir  30.4278  -9.5981      421844                Souss-Massa
+6        Meknes  33.8833  -5.5500      632079                 Fès-Meknès
+7         Oujda  34.6867  -1.9114      494252                   Oriental
+8       Kenitra  34.2610  -6.5802      431282         Rabat-Salé-Kénitra
+9       Tetouan  35.5785  -5.3684      380787  Tanger-Tétouan-Al Hoceïma
+10         Safi  32.2994  -9.2372      308508             Marrakech-Safi
+11    El Jadida  33.2316  -8.5007      194934    Grand Casablanca-Settat
+12  Beni Mellal  32.3373  -6.3498      192676       Béni Mellal-Khénifra
+13        Nador  35.1740  -2.9287      161726                   Oriental
+14    Khouribga  32.8811  -6.9063      166397       Béni Mellal-Khénifra
+15         Taza  34.2100  -4.0100      139686                 Fès-Meknès
+16       Settat  33.0014  -7.6197      142250    Grand Casablanca-Settat
+17      Larache  35.1932  -6.1560      125008  Tanger-Tétouan-Al Hoceïma
+18      Guelmim  28.9870 -10.0574      118318          Guelmim-Oued Noun
+19       Dakhla  23.7136 -15.9355      106277       Dakhla-Oued Ed-Dahab
+[2026-09-20T14:33:12.141+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2026-09-20T14:33:12.141+0000] {taskinstance.py:2905} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.12/pathlib.py", line 1311, in mkdir
+    os.mkdir(self, mode)
+FileNotFoundError: [Errno 2] No such file or directory: '/opt/project/src/data/bronze'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 465, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 432, in _execute_callable
+    return execute_callable(context=context, **execute_callable_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/baseoperator.py", line 401, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 235, in execute
+    return_value = self.execute_callable()
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 252, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/project/src/extraction/extract_weather.py", line 117, in run_extraction
+    bronze_dir.mkdir(parents=True, exist_ok=True)
+  File "/usr/local/lib/python3.12/pathlib.py", line 1315, in mkdir
+    self.parent.mkdir(parents=True, exist_ok=True)
+  File "/usr/local/lib/python3.12/pathlib.py", line 1311, in mkdir
+    os.mkdir(self, mode)
+PermissionError: [Errno 13] Permission denied: '/opt/project/src/data'
+[2026-09-20T14:33:12.167+0000] {taskinstance.py:1206} INFO - Marking task as UP_FOR_RETRY. dag_id=weather_risk_pipeline, task_id=extract_weather, run_id=manual__2026-09-20T14:32:54.788745+00:00, execution_date=20260920T143254, start_date=20260920T143311, end_date=20260920T143312
+[2026-09-20T14:33:12.193+0000] {standard_task_runner.py:110} ERROR - Failed to execute job 4 for task extract_weather ([Errno 13] Permission denied: '/opt/project/src/data'; 173)
+[2026-09-20T14:33:12.210+0000] {local_task_job_runner.py:243} INFO - Task exited with return code 1
+[2026-09-20T14:33:12.263+0000] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2026-09-20T14:33:12.266+0000] {local_task_job_runner.py:222} INFO - ::endgroup::

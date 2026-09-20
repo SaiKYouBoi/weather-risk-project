@@ -1,10 +1,10 @@
-#Morocco Weather Risk Pipeline
+# Morocco Weather Risk Pipeline
 
 A end-to-end data engineering project that collects daily weather forecasts for Moroccan cities, scores their operational risk for last-mile delivery, and stores the results in PostgreSQL — ready for dashboarding and scheduling.
 
 ---
 
-## 📐 Architecture
+## Architecture
 
 ```
 Open-Meteo API
@@ -28,7 +28,7 @@ Open-Meteo API
 
 ---
 
-## 🏙️ Cities Covered
+## Cities Covered
 
 Moroccan cities across all major regions:
 
